@@ -47,11 +47,18 @@ html, body {
 <body>
     <table align="center">
         <tr>
-            <td align="left">
-                Score: <span id="score">0</span>
-            </td>
-            <td align="right">
-                Temps: <span id="timer">0</span>
+            <td colspan="2">
+                <table width="100%"><tr>
+                    <td align="left">
+                        Score: <span id="score">0</span>
+                    </td>
+                    <td align="center">
+                        Correct Pourcentage: <span id="percent">0</span>%
+                    </td>
+                    <td align="right">
+                        Temps: <span id="timer">0</span>
+                    </td>
+                </tr></table>
             </td>
         </tr>
         <tr>
@@ -177,11 +184,12 @@ html, body {
             const rand = Math.floor(Math.random() * 27);
             if( rand === 26 )
                 return " "
-            return String.fromCharCode(97 + rand); //97 = 'a'
+            return String.fromCharCode(65 + rand).toLocaleLowerCase(); //97 = 'a'
         }
 
-        function onOk(){
+        function updateScoreboard(){
           document.querySelector("#score").innerHTML=game.currentScore;
+          document.querySelector("#percent").innerHTML=Math.round(game.currentScore*100/(game.currentFail+game.currentScore)); 
         }
         
         function press( lastKey ){
@@ -196,6 +204,7 @@ html, body {
         const game = {
             currentKey: getChar(),
             currentScore: 0,
+            currentFail : 0,
             startTime: null
         }
 
@@ -231,12 +240,13 @@ html, body {
                     toggleKey(game.currentKey, "active");
                     //
                     game.currentScore ++;
-                    //
-                    onOk();
                     //next key
                     game.currentKey = getChar();
                     toggleKey(game.currentKey, "active");
-                }
+                }else
+                    game.currentFail ++;
+
+                updateScoreboard();
             });
         }
 
