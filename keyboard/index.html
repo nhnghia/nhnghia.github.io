@@ -47,10 +47,11 @@ html, body {
 <body>
     <table align="center">
         <tr>
-            <td colspan="2" align="center">
-
-                Score:
-                <span id="score"></span>
+            <td align="left">
+                Score: <span id="score">0</span>
+            </td>
+            <td align="right">
+                Temps: <span id="timer">0</span>
             </td>
         </tr>
         <tr>
@@ -195,15 +196,37 @@ html, body {
         const game = {
             currentKey: getChar(),
             currentScore: 0,
-            startTime: new Date()
+            startTime: null
         }
 
+        
+        function speak( txt ){
+            const msg = new SpeechSynthesisUtterance( txt );
+            msg.lang = "fr-fr";
+            window.speechSynthesis.speak(msg);
+        }
+
+        function startTimeCounter(){
+            setInterval(function(){
+                if( game.startTime == null )
+                    return;
+                const msec = (new Date()).getTime() - game.startTime;
+                document.querySelector("#timer").innerHTML = Math.round(msec/1000);
+            }, 1000)
+        }
 
         function startGame(){
             toggleKey(game.currentKey, "active");
 
             window.addEventListener('keyup', function(e) {
                 e.preventDefault();
+
+                speak( e.key );
+
+                //init time
+                if( game.startTime == null )
+                    game.startTime = (new Date()).getTime();
+
                 if( e.key === game.currentKey ){
                     toggleKey(game.currentKey, "active");
                     //
@@ -240,6 +263,7 @@ html, body {
             .then( () => setFingerId("#rightHand", "right" ))
             .then( captureKeypress )
             .then( startGame )
+            .then( startTimeCounter )
             //.then( press )
     </script>
   </body>
