@@ -1,0 +1,3 @@
+[submodule "test-keyboard"]
+	path = test-keyboard
+	url = git@github.com:nhnghia/test-keyboard.git
