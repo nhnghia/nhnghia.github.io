@@ -11,10 +11,10 @@
       <title>Dragon</title>
    </head>
    <body>
+      <div id=page></div>
       Dragon Ball Super, Chapter <select id="chapter" onchange="loadChapter(this.value)"></select>
       <div id=data></div>
       <script>
-         window.scrollTo(0,1);
          function getImages(string) {
            const imgRex = /<img.*?src='(.*?)'[^>]+>/gi;
            const images = [];
@@ -54,6 +54,18 @@
          for( var i=1; i<=82; i++ )
             chapters += `<option value=${i}> ${i}</option>`;
          $("#chapter").html(chapters);
+
+         //hide address bar
+         $("#page").height( window.screen.height )
+         setTimeout( function(){
+            $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+         }, 10);
+         //disable scroll
+         $('#element').on('scroll touchmove mousewheel', function(e){
+           e.preventDefault();
+           e.stopPropagation();
+           return false;
+         })
       </script>
    </body>
 </html>
