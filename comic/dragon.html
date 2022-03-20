@@ -5,20 +5,14 @@
       <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
       <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.10.2/simple-lightbox.min.js" integrity="sha512-w+rQhMH2MD2B83HHL1XEFyRYOVG5SEUjD9tLoRalSQWDBe4x9DVD7FX34ytJ4uVplDJMik8aZLrQ6bSIQSTXZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.10.2/simple-lightbox.css" integrity="sha512-zzuMv0u0lEtLGk+Oq+TFNIQpzXE6kzuulP0yHDARqrQ9ozTxRkM6IfR0yXcI2zevX6UrZdXWBrosf2EbiTZKyg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <title>Dragon</title>
    </head>
    <body>
       Dragon Ball Super, Chapter <select id="chapter" onchange="loadChapter(this.value)"></select>
       <div id=data></div>
       <script>
-         lightbox.option({
-            alwaysShowNavOnTouchDevices: true,
-            disableScrolling: true,
-            positionFromTop: 0,
-
-         });
          function getImages(string) {
            const imgRex = /<img.*?src='(.*?)'[^>]+>/gi;
            const images = [];
@@ -39,6 +33,13 @@
                   const imgs = getImages( data );
                   const text = imgs.map( (img, i) => `<a href=${img} data-lightbox="roadtrip">${i+1}</a> `);
                   $('#data').html(text);
+
+                  var lightbox = new SimpleLightbox('#data a', {
+                     overlayOpacity: 1,
+                     widthRatio: 1,
+                     heightRatio: 1,
+                     scaleImageToRatio: true,
+                  });
                });
          }
 
