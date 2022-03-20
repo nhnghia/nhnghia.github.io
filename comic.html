@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+      <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <title>Dragon</title>
+   </head>
+   <body>
+      <div id=data></div>
+      <script>
+         function getImages(string) {
+           const imgRex = /<img.*?src='(.*?)'[^>]+>/gi;
+           const images = [];
+             let img;
+             while ((img = imgRex.exec(string))) {
+               images.push(img[1]);
+             }
+           return images;
+         }
+         jQuery.ajaxPrefilter(function(options) {
+            if (options.crossDomain && jQuery.support.cors)
+              options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+         });
+
+         function loadChapter(chapter){
+            $.get( "https://read-dragonballsuper.com/comic/dragon-ball-super-chapter-" + chapter,
+               function(data){
+                  const imgs = getImages( data );
+                  const text = imgs.map( (img, i) => `<a href=${img} data-lightbox="roadtrip">${i+1}</a> `);
+                  $('#data').html(text);
+               });
+         }
+
+         loadChapter(1);
+         for( var i=1; i<=82; i++ )
+            document.write(`<a onclick=loadChapter(${i}) href=#chap-${i}>Dragon Ball Super, Chapter ${i}</a><br/>`);
+      </script>
+   </body>
+</html>
