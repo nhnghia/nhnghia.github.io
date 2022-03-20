@@ -12,6 +12,12 @@
    <body>
       <div id=data></div>
       <script>
+         lightbox.option({
+            alwaysShowNavOnTouchDevices: true,
+            disableScrolling: true,
+            positionFromTop: 0,
+
+         });
          function getImages(string) {
            const imgRex = /<img.*?src='(.*?)'[^>]+>/gi;
            const images = [];
