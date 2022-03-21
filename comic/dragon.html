@@ -36,6 +36,7 @@
                   const text = imgs.map( (img, i) => `<a href=${img} data-lightbox="roadtrip">${i+1}</a> `);
                   $('#data').html(text);
 
+                  //https://simplelightbox.com/
                   var lightbox = new SimpleLightbox('#data a', {
                      overlayOpacity: 1,
                      widthRatio: 1,
@@ -45,7 +46,12 @@
                      animationSpeed: 0
                   });
                   lightbox.open();
-               });
+               }
+             )
+            .fail(function() {
+               alert( "Need to approve CORS Anywhere" );
+               window.location.href = "https://cors-anywhere.herokuapp.com/corsdemo";
+            });
          }
 
          loadChapter(1);
